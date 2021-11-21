@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "Data Science do Zero - Livro"
+version = "0.1.0"
+description = "Repositorio com as implementacoes do livro Data Science do Zero"
+authors = ["William Wayn <willzwayn@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+black = {version = "^21.11b1", allow-prereleases = true}
+mypy = {version = "^0.910", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
