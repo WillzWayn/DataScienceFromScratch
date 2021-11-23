@@ -6,6 +6,7 @@ authors = ["William Wayn <willzwayn@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pytest-cov = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
