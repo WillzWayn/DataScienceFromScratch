@@ -1,18 +1,17 @@
-name: PyTest
+name: coverage
 
-on: pull_request
+on:
+  - push
 
 jobs:
-  test:
+  codecov:
     runs-on: ubuntu-latest
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
       #----------------------------------------------
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Set up python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.9
       #----------------------------------------------
@@ -23,8 +22,6 @@ jobs:
         with:
           virtualenvs-create: true
           virtualenvs-in-project: true
-          installer-parallel: true
-
       #----------------------------------------------
       #       load cached venv if cache exists
       #----------------------------------------------
@@ -46,10 +43,18 @@ jobs:
       - name: Install library
         run: poetry install --no-interaction
       #----------------------------------------------
-      #              run test suite
+      #    run test suite and output coverage file
       #----------------------------------------------
-      - name: Run tests
-        run: |
-          source .venv/bin/activate
-          pytest tests/
-          coverage report
+      - name: Test with pytest
+        run: poetry run pytest --cov=src/ --cov-report=xml
+      #----------------------------------------------
+      #             upload coverage stats
+      # (requires CODECOV_TOKEN in repository secrets)
+      #----------------------------------------------
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage.xml # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
