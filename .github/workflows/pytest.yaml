@@ -46,7 +46,7 @@ jobs:
       #    run test suite and output coverage file
       #----------------------------------------------
       - name: Test with pytest
-        run: poetry run pytest --cov=src/ --cov-report=xml
+        run: poetry run pytest --cov=src/ --cov-report=xml -vvv
       #----------------------------------------------
       #             upload coverage stats
       # (requires CODECOV_TOKEN in repository secrets)
