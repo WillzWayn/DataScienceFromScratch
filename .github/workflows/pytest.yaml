@@ -1,10 +1,10 @@
-name: coverage
+name: PyTest-Coverage
 
 on:
   - push
 
 jobs:
-  codecov:
+  PyTest-Coverage:
     runs-on: ubuntu-latest
     steps:
       #----------------------------------------------
@@ -46,7 +46,7 @@ jobs:
       #    run test suite and output coverage file
       #----------------------------------------------
       - name: Test with pytest
-        run: poetry run pytest --cov=src/ --cov-report=xml -vvv
+        run: poetry run pytest --cov src --cov-branch --cov-report term-missing --cov-report=xml -v
       #----------------------------------------------
       #             upload coverage stats
       # (requires CODECOV_TOKEN in repository secrets)
@@ -58,3 +58,15 @@ jobs:
       #     files: ./coverage.xml # optional
       #     fail_ci_if_error: true # optional (default = false)
       #     verbose: true # optional (default = false)
+      #----------------------------------------------
+      #             upload Artifact stats
+      # 
+      #----------------------------------------------
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          # Artifact name
+          name: covarage # optional, default is artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: ./coverage.xml
+          # The desired behavior if no files are found using the provided path.
